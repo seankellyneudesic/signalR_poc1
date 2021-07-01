@@ -19,7 +19,13 @@ This is the first pass of a proof-of-concept where we can demo that Admin can se
 
 ### NOTES 
 
-- Copy and paste the client url `http://localhost:3001` to additional windows to create new client users
+- Client runs at `http://localhost:3000`
+- Admin runs at `http://localhost:3001`
+
+- CORS is enabled and restricted to these two addresses (in API startup.cs)
+- Pay attention to order of services/config pipeline in startup.cs, IT DOES MATTER!!!
+
+- Copy and paste the client url `http://localhost:3000` to additional windows to create new client users
 
 - Admin can broadcast messages globally to everyone (the top message send area) and can send directed to a user (bottom message send area). 
 - Admin user list will update with user names (from unknown) when client user sends a message with their name specified.
