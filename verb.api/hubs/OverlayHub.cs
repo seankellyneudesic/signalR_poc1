@@ -9,12 +9,12 @@ namespace verb.api.hubs
     {
         public async Task OverlayPlace(OverlayPlaceMessage message)
         {
-            await Clients.All.OverlayPlace(message);
+            await Clients.All.ReceiveOverlayPlace(message);
         }
 
         public async Task OverlayMove(OverlayMoveMessage message)
         {
-            await Clients.All.OverlayMove(message);
+            await Clients.All.ReceiveOverlayMove(message);
         }
     }
 }

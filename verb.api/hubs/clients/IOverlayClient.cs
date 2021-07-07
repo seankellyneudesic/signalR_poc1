@@ -5,7 +5,7 @@ namespace varb.api.hubs.clients
 {
     public interface IOverlayClient
     {
-        Task OverlayPlace(OverlayPlaceMessage message);
-        Task OverlayMove(OverlayMoveMessage message);
+        Task ReceiveOverlayPlace(OverlayPlaceMessage message);
+        Task ReceiveOverlayMove(OverlayMoveMessage message);
     }
 }
