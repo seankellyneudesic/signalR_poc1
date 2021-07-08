@@ -57,8 +57,9 @@ const Chat = () => {
     }
 
     return (
-        <div>
-            <ChatInput sendMessage={sendMessage} />            
+        <div style={{ width: '100%'}}>
+            <ChatInput sendMessage={sendMessage} /> 
+            <br/>           
             <ChatWindow chat={chat}/>
         </div>
     );

@@ -83,11 +83,12 @@ const Chat = () => {
         }
     }
     return (
-        <div>
+        <div style={{ width: '100%'}}>
             <ChatInput sendMessage={sendMessage} />
-            <hr />
-            <ChatWindow chat={chat}/>
+            <br/>            
             <SendDirectMessage users={currentUsers} sendDirectMessage={sendDirectMessage} />
+            <br/>
+            <ChatWindow chat={chat}/>
         </div>
     );
 };

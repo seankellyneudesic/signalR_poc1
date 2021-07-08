@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import ChatUsers from './ChatUsers';
+import Input from './Input';
+import Button from './Button';
 
 const SendDirectMessage = (props) => {
     const [userId, setUserId] = useState('');
@@ -34,16 +36,13 @@ const SendDirectMessage = (props) => {
             <br />
                 <ChatUsers users={props.users} onChange={onSelectedUser} />
             <br/>
-            <label htmlFor="message">Message:</label>
-            <br />
-            <input 
-                type="text"
-                id="message"
+            <Input id="message" 
                 name="message" 
+                label="Message"
                 value={message}
                 onChange={onMessageUpdate} />
-            <br/><br/>
-            <button>Submit</button>
+            <br/>
+            <Button>Send Direct Message</Button>
         </form>
     )
 };

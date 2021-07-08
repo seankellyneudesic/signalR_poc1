@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import Input from './Input';
+import Button from './Button';
 
 const ChatInput = (props) => {
     const [user, setUser] = useState('');
@@ -29,24 +31,19 @@ const ChatInput = (props) => {
     return (
         <form 
             onSubmit={onSubmit}>
-            <label htmlFor="user">Username:</label>
-            <br />
-            <input 
-                id="user" 
+            <Input id="user" 
                 name="user" 
+                label="Username"
                 value={user}
                 onChange={onUserUpdate} />
-            <br/>
-            <label htmlFor="message">Message:</label>
-            <br />
-            <input 
-                type="text"
-                id="message"
+            
+            <Input id="message" 
                 name="message" 
+                label="Message"
                 value={message}
                 onChange={onMessageUpdate} />
-            <br/><br/>
-            <button>Submit</button>
+
+            <Button>Submit</Button>
         </form>
     )
 };

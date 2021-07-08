@@ -1,17 +1,25 @@
 import './App.css';
 import Chat from './Components/Chat';
+import Video from './Components/Video';
 import Overlays from './Components/Overlays';
+
+import { GridContainer, Grid, Row, Col } from './Components/FlexboxGrid';
+
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <div style={{ margin: '0 30%' }}>
-          <h2>Verb Admin</h2>
-          <Chat />
+  return (    
+  <GridContainer>
+  <Grid>
+    <Row><h2 style={{ textAlign: 'center'}}>Verb Live Client</h2></Row>
+    <Row>
+      <Col flex={2}>
+        <Video>
           <Overlays />
-        </div>
-      </header>
-    </div>
+        </Video>
+      </Col>
+      <Col flex={1}><Chat /></Col>
+    </Row>
+  </Grid>
+  </GridContainer>  
   );
 }
 

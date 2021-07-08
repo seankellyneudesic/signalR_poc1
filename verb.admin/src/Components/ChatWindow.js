@@ -10,7 +10,7 @@ const ChatWindow = (props) => {
             message={m.message}/>);
 
     return(
-        <div style={{ color: '#333'}}>
+        <div style={{ color: '#333', minHeight: 200, border: 'solid 1px #eee', borderRadius: 15, background: '#fff', width: '100%', textAlign: 'left' }}>
             {chat}
         </div>
     )
