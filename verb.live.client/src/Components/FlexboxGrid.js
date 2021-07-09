@@ -12,6 +12,7 @@ padding: 0;
 margin: 0;
 margin-left: 15px;
 margin-right: 15px;
+${props => props.noGutters && css`margin: 0; padding: 0;`}
 display: flex;
 flex-direction: column;
 `;
@@ -19,9 +20,9 @@ flex-direction: column;
 export const Col = styled.div`
 display: flex;
 margin: 0;
-padding: 15px;        
+padding: ${props => props.noGutters || '15px'};        
 flex: ${props => props.flex || 1}   
-${props => props.noGutters && css`margin-left: -15px; margin-right: -15px;`}
+${props => props.noGutters && css`padding: 0;`}
 ${props => props.start && css`justify-content:flex-start;`}
 ${props => props.end && css`justify-content:flex-end;`}
 ${props => props.center && css`justify-content:center;`}  
@@ -32,10 +33,9 @@ ${props => props.spaceEvenly && css`justify-content:space-evenly;`}
 
 export const Row = styled.div`    
 margin: 0;
-padding: 15px;
+padding: ${props => props.noGutters || '15px'};        
 display: flex;    
 flex-direction: row;    
-${props => props.noGutters && css`margin-left: -15px; margin-right: -15px;`}
 ${props => props.start && css`justify-content:flex-start;`}
 ${props => props.end && css`justify-content:flex-end;`}
 ${props => props.center && css`justify-content:center;`}  

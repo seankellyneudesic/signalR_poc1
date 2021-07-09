@@ -31,5 +31,14 @@ namespace verb.api.Controllers
         {
             return UserHandler.ConnectedUsers.ToList();
         }
+
+        [HttpPost]
+        [Route("ClearConnections")]
+        public async Task<ActionResult> ClearConnections()
+        {
+            UserHandler.ConnectedUsers.Clear();
+            // might be more to do
+            return Ok();
+        }
     }
 }

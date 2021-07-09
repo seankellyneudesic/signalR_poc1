@@ -40,7 +40,14 @@ namespace verb.api.hubs
 
         public override Task OnDisconnectedAsync(Exception exception)
         {
-            UserHandler.ConnectedUsers.Remove(UserHandler.ConnectedUsers.First(x=>x.Id == Context.ConnectionId));
+            try
+            {
+                UserHandler.ConnectedUsers.Remove(UserHandler.ConnectedUsers.First(x => x.Id == Context.ConnectionId));
+            }
+            catch
+            {
+
+            }
             return base.OnDisconnectedAsync(exception);
         }
     }

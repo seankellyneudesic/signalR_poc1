@@ -9,10 +9,10 @@ function App() {
   return (    
   <GridContainer>
   <Grid>
-    <Row><h2 style={{ textAlign: 'center'}}>Verb Live Client</h2></Row>
+    <Row><h2 style={{ textAlign: 'center'}}>Verb Live Admin</h2></Row>
     <Row>
       <Col flex={2}>
-        <Video>
+        <Video>          
           <Overlays />
         </Video>
       </Col>

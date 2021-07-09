@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const StyledInput = styled.input`
     font-size: 16pt;
@@ -12,12 +12,18 @@ const StyledInput = styled.input`
     }
 `;
 
+const StyledLabel = styled.label`
+    display: ${props => props.sideLabel ? 'inline-block' : 'inline'};
+    min-width: ${props => props.sideLabel ? '150px' : 'inherit'};
+    color: ${props => props.color || '#333'};
+`;
+
 
 const Input = (props) => {
     
     return (
         <>
-        <label htmlFor={props.name}>{props.label}:</label>        
+        <StyledLabel htmlFor={props.name} color={props.labelColor} sideLabel={props.sideLabel}>{props.label}:</StyledLabel>        
         <br />
         <StyledInput id={props.name}
                 name={props.name} 

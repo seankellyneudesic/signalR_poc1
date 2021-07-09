@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { HubConnectionBuilder } from '@microsoft/signalr';
-
+import ButtonLink from './ButtonLink';
+import ImageLink from './ImageLink';
   
 const Overlays = (props) => {
     const [ connection, setConnection ] = useState(null);
@@ -34,22 +35,6 @@ const Overlays = (props) => {
         }
     }, [connection]);
 
-    const ImageLink = (props) => {
-        return (
-        <div style={{ height: '100%', width: '100%', position: 'absolute', left: props.item.x, top: props.item.y, zIndex: 20 }}>
-            <div style={{ left: "150px", top: "150px", position: "absolute", color: '#fff', fontSize: 24 }}>{props.item.message}</div>
-        </div>
-        );
-    }
-
-    const ButtonLink = (props) => {
-        return (
-        <div style={{ height: '100%', width: '100%', position: 'absolute', left: props.item.x, top: props.item.y, zIndex: 20 }}>
-            <div style={{ left: "150px", top: "150px", position: "absolute", color: '#fff', fontSize: 24 }}>{props.item.message}</div>
-        </div>
-        );
-    }
-
     const renderOverlayComponent = (overlay) => {
         switch (overlay.overlayType) {
             case 'buttonlink':
@@ -61,9 +46,9 @@ const Overlays = (props) => {
     }
 
     return (
-        <>
-        {overlays.map(overlay => renderOverlayComponent(overlay))}        
-        </>
+        <div style={{ height: '100%', width: '100%', position: 'absolute' }}>
+            {overlays.map(overlay => (<React.Fragment key={overlay.resourceId}>{renderOverlayComponent(overlay)}</React.Fragment>))}
+        </div>
     );
 };
 
