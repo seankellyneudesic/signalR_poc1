@@ -11,6 +11,7 @@ import { Grid, Row } from './FlexboxGrid';
 const Chat = () => {
     const [ connection, setConnection ] = useState(null);
     const [ overlays, setOverlays ] = useState([]);
+    const overlayContainer = useRef(null);
     const latestOverlays = useRef(null);
     const [title, setTitle] = useState('');
     const [xPos, setXPos] = useState(0);
@@ -37,7 +38,7 @@ const Chat = () => {
 
     useEffect(() => {
         const newConnection = new HubConnectionBuilder()
-            .withUrl('https://localhost:44372/hubs/overlay')
+            .withUrl('https://localhost:5001/hubs/overlay')
             .withAutomaticReconnect()
             .build();
 
@@ -59,9 +60,9 @@ const Chat = () => {
         }
     }, [connection]);
 
-    const sendMessage = async ({ message, overlayType, x, y}) => {
+    const sendMessage = async ({ message, overlayType, x, y, resourceId}) => {
         const chatMessage = {            
-            message, overlayType, x, y
+            message, overlayType, x, y, resourceId
         };
 
         if (connection.connectionStarted) {
@@ -77,30 +78,61 @@ const Chat = () => {
         }
     }
 
+    const sendMoveMessage = async (msg) => {    
+        if (connection.connectionStarted) {
+            try {
+                await connection.send('OverlayMove', msg);
+            }
+            catch(e) {
+                console.log(e);
+            }
+        }
+        else {
+            alert('No connection to server yet.');
+        }
+    }
 
-    const generateImageContent = () => {
-        const x = Math.round((Math.random() * 800));
-        const y = Math.round((Math.random() * 600));
-        const message = Math.round(Math.random() * 1) === 1 ? 'Hello': 'Greetings';
-        const overlayType = "imagelink";
-        sendMessage({ message, overlayType, x, y});
+    const uuidv4 = () => {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+          var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+          return v.toString(16);
+        });
+      }
+
+    const generateImageContent = () => {        
+        var rq = {
+            x: Math.round(Math.random() * 800),
+            y: Math.round(Math.random() * 600),
+            message: Math.round(Math.random() * 1) === 1 ? 'Goodbye': 'See ya',
+            resourceId: uuidv4(),
+            overlayType: "imagelink"
+        };
+        sendMessage(rq);
     }
 
     const generateButtonContent = () => {
-        const x = Math.round((Math.random() * 800));
-        const y = Math.round((Math.random() * 600));
-        const message = Math.round(Math.random() * 1) === 1 ? 'Goodbye': 'See ya';
-        const overlayType = "buttonlink";
-        sendMessage({ message, overlayType, x, y});
+        var rq = {
+            x: Math.round(Math.random() * 800),
+            y: Math.round(Math.random() * 600),
+            message: Math.round(Math.random() * 1) === 1 ? 'Goodbye': 'See ya',
+            resourceId: uuidv4(),
+            overlayType: "buttonlink"
+        };                
+        sendMessage(rq);
     }
 
-    const renderOverlayComponent = (overlay) => {
+    const handleMoveEvent = (msg) => {
+        //x, y, resourceId
+        sendMoveMessage(msg);
+    }
+
+    const renderOverlayComponent = (overlay, overlayContainer) => {
         switch (overlay.overlayType) {
             case 'buttonlink':
-                return <ButtonLink item={overlay} />;
+                return <ButtonLink item={overlay} overlayContainer={overlayContainer} onMoveEvent={handleMoveEvent} />;
             case 'imagelink':            
             default:
-                return <ImageLink item={overlay} />;
+                return <ImageLink item={overlay} overlayContainer={overlayContainer}  onMoveEvent={handleMoveEvent}/>;
         }
     }
 
@@ -184,9 +216,9 @@ const Chat = () => {
 
     return (
         <>
-        <div style={{ height: '100%', width: '100%', position: 'absolute', left: 0, top: 0 }}>
-            {overlays.map(overlay => (<React.Fragment key={overlay.resourceId}>{renderOverlayComponent(overlay)}</React.Fragment>))}
-            <div style={{ left: 50, bottom: 50, zIndex: 30, position: "absolute", color: '#fff', fontSize: 24 }}> 
+        <div style={{ height: '100%', width: '100%', position: 'absolute', left: 0, top: 0 }} ref={overlayContainer}>
+            {overlays.map(overlay => (<React.Fragment key={overlay.resourceId}>{renderOverlayComponent(overlay, overlayContainer)}</React.Fragment>))}            
+            <div style={{ left: 0, bottom: 50, zIndex: 30, position: "absolute", color: '#fff', fontSize: 24 }}> 
                 <Button onClick={showModal}>Generate Image Content</Button>
                 <Button onClick={generateButtonContent}>Generate Button Content</Button>
             </div>

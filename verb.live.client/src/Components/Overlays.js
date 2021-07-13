@@ -12,7 +12,7 @@ const Overlays = (props) => {
 
     useEffect(() => {
         const newConnection = new HubConnectionBuilder()
-            .withUrl('https://localhost:44372/hubs/overlay')
+            .withUrl('https://localhost:5001/hubs/overlay')
             .withAutomaticReconnect()
             .build();
 
@@ -27,8 +27,16 @@ const Overlays = (props) => {
     
                     connection.on('ReceiveOverlayPlace', message => {
                         const updatedOverlays = [...latestOverlays.current];
-                        updatedOverlays.push(message);                    
+                        updatedOverlays.push({...message, originalX: message.x, originalY: message.y});                    
                         setOverlays(updatedOverlays);
+                    });
+
+                    connection.on('ReceiveOverlayMove', message => {
+                        const updatedOverlays = [...latestOverlays.current];
+                        const foundItem = {...updatedOverlays.find(x=>x.resourceId === message.resourceId)}
+                        const updatedItem = {...foundItem, x: foundItem.originalX + message.x, y: foundItem.originalY + message.y };
+                        const newState = [...updatedOverlays.filter(x=>x.resourceId !== message.resourceId), updatedItem];
+                        setOverlays(newState);
                     });
                 })
                 .catch(e => console.log('Connection failed: ', e));

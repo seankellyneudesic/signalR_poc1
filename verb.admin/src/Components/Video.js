@@ -19,8 +19,8 @@ const WebcamCapture = (props) => {
 
     return (
         <>
-        <div style={{ height: '100%', minHeight: 800, width: '100%', position: 'relative' }}>
-            <div style={{ height: '100%', width: '100%', position: 'absolute', left: 0, top: 0, zIndex: 1 }}>
+        <div style={{ height: '100%', width: '100%', position: 'relative' }}>
+            <div style={{ width: '100%', position: 'absolute', left: 0, top: 0, zIndex: 1 }}>
             <Webcam
                 audio={false}
                 height={'auto'}

@@ -10,14 +10,12 @@ namespace verb.api.hubs
         public async Task OverlayPlace(OverlayPlaceMessage message)
         {
             message.DateTimeUTC = DateTime.UtcNow;
-            message.ResourceId = Guid.NewGuid();
             await Clients.All.ReceiveOverlayPlace(message);
         }
 
         public async Task OverlayMove(OverlayMoveMessage message)
         {
             message.DateTimeUTC = DateTime.UtcNow;
-            message.ResourceId = Guid.NewGuid();
             await Clients.All.ReceiveOverlayMove(message);
         }
     }
